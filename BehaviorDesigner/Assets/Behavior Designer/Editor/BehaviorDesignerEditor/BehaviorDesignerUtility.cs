@@ -1370,7 +1370,7 @@ namespace BehaviorDesigner.Editor
 		// Token: 0x06000082 RID: 130 RVA: 0x00003E74 File Offset: 0x00002074
 		public static string GetEditorBaseDirectory(Object obj = null)
 		{
-			string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+			string codeBase = Assembly.Load("BehaviorDesignerEditor").CodeBase;
 			string text = Uri.UnescapeDataString(new UriBuilder(codeBase).Path);
 			return Path.GetDirectoryName(text.Substring(Application.dataPath.Length - 6));
 		}
