@@ -121,6 +121,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BehaviorDesigner.csproj">
+      <Project>{68B6AA55-41EE-C91C-362E-C8B16D487878}</Project>
+      <Name>BehaviorDesigner</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Behavior Designer\Editor\BehaviorDesignerEditor\AlphanumComparator.cs" />
     <Compile Include="Assets\Behavior Designer\Editor\BehaviorDesignerEditor\AssetCreationMenus.cs" />
     <Compile Include="Assets\Behavior Designer\Editor\BehaviorDesignerEditor\AssetCreator.cs" />

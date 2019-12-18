@@ -289,10 +289,11 @@ namespace BehaviorDesigner.Runtime
 			}
 			if (!this.initialized)
 			{
-				for (int i = 0; i < 11; i++)
+				for (int i = 0; i < (int)EventTypes.None; i++)
 				{
-                    this.hasEvent[i] = false;//this.TaskContainsMethod(((Behavior.EventTypes)i).ToString(), this.mBehaviorSource.RootTask);
-				}
+                    //this.hasEvent[i] = this.TaskContainsMethod(((Behavior.EventTypes)i).ToString(), this.mBehaviorSource.RootTask);
+                    this.hasEvent[i] = false;
+                }
 				this.initialized = true;
 			}
 		}
