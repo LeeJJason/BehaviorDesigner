@@ -1,0 +1,206 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using BehaviorDesigner.Runtime;
+using BehaviorDesigner.Runtime.Tasks;
+using UnityEngine;
+
+namespace BehaviorDesigner.Editor
+{
+	// Token: 0x0200002B RID: 43
+	public class TaskReferences : MonoBehaviour
+	{
+		// Token: 0x060002A7 RID: 679 RVA: 0x0001A11C File Offset: 0x0001831C
+		public static void CheckReferences(BehaviorSource behaviorSource)
+		{
+			if (behaviorSource.RootTask != null)
+			{
+				TaskReferences.CheckReferences(behaviorSource, behaviorSource.RootTask);
+			}
+			if (behaviorSource.DetachedTasks != null)
+			{
+				for (int i = 0; i < behaviorSource.DetachedTasks.Count; i++)
+				{
+					TaskReferences.CheckReferences(behaviorSource, behaviorSource.DetachedTasks[i]);
+				}
+			}
+		}
+
+		// Token: 0x060002A8 RID: 680 RVA: 0x0001A17C File Offset: 0x0001837C
+		private static void CheckReferences(BehaviorSource behaviorSource, Task task)
+		{
+			FieldInfo[] allFields = TaskUtility.GetAllFields(task.GetType());
+			for (int i = 0; i < allFields.Length; i++)
+			{
+				if (!allFields[i].FieldType.IsArray && (allFields[i].FieldType.Equals(typeof(Task)) || allFields[i].FieldType.IsSubclassOf(typeof(Task))))
+				{
+					Task task2 = allFields[i].GetValue(task) as Task;
+					if (task2 != null)
+					{
+						Task task3 = TaskReferences.FindReferencedTask(behaviorSource, task2);
+						if (task3 != null)
+						{
+							allFields[i].SetValue(task, task3);
+						}
+					}
+				}
+				else if (allFields[i].FieldType.IsArray && (allFields[i].FieldType.GetElementType().Equals(typeof(Task)) || allFields[i].FieldType.GetElementType().IsSubclassOf(typeof(Task))))
+				{
+					Task[] array = allFields[i].GetValue(task) as Task[];
+					if (array != null)
+					{
+						IList list = Activator.CreateInstance(typeof(List<>).MakeGenericType(new Type[]
+						{
+							allFields[i].FieldType.GetElementType()
+						})) as IList;
+						for (int j = 0; j < array.Length; j++)
+						{
+							Task task4 = TaskReferences.FindReferencedTask(behaviorSource, array[j]);
+							if (task4 != null)
+							{
+								list.Add(task4);
+							}
+						}
+						Array array2 = Array.CreateInstance(allFields[i].FieldType.GetElementType(), list.Count);
+						list.CopyTo(array2, 0);
+						allFields[i].SetValue(task, array2);
+					}
+				}
+			}
+			if (task.GetType().IsSubclassOf(typeof(ParentTask)))
+			{
+				ParentTask parentTask = task as ParentTask;
+				if (parentTask.Children != null)
+				{
+					for (int k = 0; k < parentTask.Children.Count; k++)
+					{
+						TaskReferences.CheckReferences(behaviorSource, parentTask.Children[k]);
+					}
+				}
+			}
+		}
+
+		// Token: 0x060002A9 RID: 681 RVA: 0x0001A38C File Offset: 0x0001858C
+		private static Task FindReferencedTask(BehaviorSource behaviorSource, Task referencedTask)
+		{
+			int id = referencedTask.ID;
+			Task result;
+			if (behaviorSource.RootTask != null && (result = TaskReferences.FindReferencedTask(behaviorSource.RootTask, id)) != null)
+			{
+				return result;
+			}
+			if (behaviorSource.DetachedTasks != null)
+			{
+				for (int i = 0; i < behaviorSource.DetachedTasks.Count; i++)
+				{
+					if ((result = TaskReferences.FindReferencedTask(behaviorSource.DetachedTasks[i], id)) != null)
+					{
+						return result;
+					}
+				}
+			}
+			return null;
+		}
+
+		// Token: 0x060002AA RID: 682 RVA: 0x0001A404 File Offset: 0x00018604
+		private static Task FindReferencedTask(Task task, int referencedTaskID)
+		{
+			if (task.ID == referencedTaskID)
+			{
+				return task;
+			}
+			if (task.GetType().IsSubclassOf(typeof(ParentTask)))
+			{
+				ParentTask parentTask = task as ParentTask;
+				if (parentTask.Children != null)
+				{
+					for (int i = 0; i < parentTask.Children.Count; i++)
+					{
+						Task result;
+						if ((result = TaskReferences.FindReferencedTask(parentTask.Children[i], referencedTaskID)) != null)
+						{
+							return result;
+						}
+					}
+				}
+			}
+			return null;
+		}
+
+		// Token: 0x060002AB RID: 683 RVA: 0x0001A484 File Offset: 0x00018684
+		public static void CheckReferences(Behavior behavior, List<Task> taskList)
+		{
+			for (int i = 0; i < taskList.Count; i++)
+			{
+				TaskReferences.CheckReferences(behavior, taskList[i], taskList);
+			}
+		}
+
+		// Token: 0x060002AC RID: 684 RVA: 0x0001A4B8 File Offset: 0x000186B8
+		private static void CheckReferences(Behavior behavior, Task task, List<Task> taskList)
+		{
+			if (TaskUtility.CompareType(task.GetType(), "BehaviorDesigner.Runtime.Tasks.ConditionalEvaluator"))
+			{
+				FieldInfo field = task.GetType().GetField("conditionalTask");
+				object value = field.GetValue(task);
+				if (value != null)
+				{
+					task = (value as Task);
+				}
+			}
+			FieldInfo[] allFields = TaskUtility.GetAllFields(task.GetType());
+			for (int i = 0; i < allFields.Length; i++)
+			{
+				if (!allFields[i].FieldType.IsArray && (allFields[i].FieldType.Equals(typeof(Task)) || allFields[i].FieldType.IsSubclassOf(typeof(Task))))
+				{
+					Task task2 = allFields[i].GetValue(task) as Task;
+					if (task2 != null && !task2.Owner.Equals(behavior))
+					{
+						Task task3 = TaskReferences.FindReferencedTask(task2, taskList);
+						if (task3 != null)
+						{
+							allFields[i].SetValue(task, task3);
+						}
+					}
+				}
+				else if (allFields[i].FieldType.IsArray && (allFields[i].FieldType.GetElementType().Equals(typeof(Task)) || allFields[i].FieldType.GetElementType().IsSubclassOf(typeof(Task))))
+				{
+					Task[] array = allFields[i].GetValue(task) as Task[];
+					if (array != null)
+					{
+						IList list = Activator.CreateInstance(typeof(List<>).MakeGenericType(new Type[]
+						{
+							allFields[i].FieldType.GetElementType()
+						})) as IList;
+						for (int j = 0; j < array.Length; j++)
+						{
+							Task task4 = TaskReferences.FindReferencedTask(array[j], taskList);
+							if (task4 != null)
+							{
+								list.Add(task4);
+							}
+						}
+						Array array2 = Array.CreateInstance(allFields[i].FieldType.GetElementType(), list.Count);
+						list.CopyTo(array2, 0);
+						allFields[i].SetValue(task, array2);
+					}
+				}
+			}
+		}
+
+		// Token: 0x060002AD RID: 685 RVA: 0x0001A6B8 File Offset: 0x000188B8
+		private static Task FindReferencedTask(Task referencedTask, List<Task> taskList)
+		{
+			int referenceID = referencedTask.ReferenceID;
+			for (int i = 0; i < taskList.Count; i++)
+			{
+				if (taskList[i].ReferenceID == referenceID)
+				{
+					return taskList[i];
+				}
+			}
+			return null;
+		}
+	}
+}
