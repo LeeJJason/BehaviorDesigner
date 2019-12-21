@@ -5,14 +5,16 @@ using UnityEngine;
 
 namespace BehaviorDesigner.Runtime
 {
-	// Token: 0x02000018 RID: 24
-	[Serializable]
+    /// <summary>
+    /// 行为树资源 ExternalBehaviorTree 的基类
+    /// </summary>
+    [Serializable]
 	public abstract class ExternalBehavior : ScriptableObject, IBehavior
 	{
-		// Token: 0x17000027 RID: 39
-		// (get) Token: 0x06000124 RID: 292 RVA: 0x0000B4C8 File Offset: 0x000096C8
-		// (set) Token: 0x06000125 RID: 293 RVA: 0x0000B4D0 File Offset: 0x000096D0
-		public BehaviorSource BehaviorSource
+        /// <summary>
+        /// BehaviorSource
+        /// </summary>
+        public BehaviorSource BehaviorSource
 		{
 			get
 			{
@@ -24,45 +26,69 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000126 RID: 294 RVA: 0x0000B4DC File Offset: 0x000096DC
-		public BehaviorSource GetBehaviorSource()
+        /// <summary>
+        /// 返回 BehaviorSource
+        /// </summary>
+        /// <returns></returns>
+        public BehaviorSource GetBehaviorSource()
 		{
 			return this.mBehaviorSource;
 		}
 
-		// Token: 0x06000127 RID: 295 RVA: 0x0000B4E4 File Offset: 0x000096E4
-		public void SetBehaviorSource(BehaviorSource behaviorSource)
+        /// <summary>
+        /// 设置 BehaviorSource
+        /// </summary>
+        /// <param name="behaviorSource"></param>
+        public void SetBehaviorSource(BehaviorSource behaviorSource)
 		{
 			this.mBehaviorSource = behaviorSource;
 		}
 
-		// Token: 0x06000128 RID: 296 RVA: 0x0000B4F0 File Offset: 0x000096F0
+		/// <summary>
+        /// 返回资源对象
+        /// </summary>
+        /// <returns></returns>
 		public UnityEngine.Object GetObject()
 		{
 			return this;
 		}
 
-		// Token: 0x06000129 RID: 297 RVA: 0x0000B4F4 File Offset: 0x000096F4
+		/// <summary>
+        /// 返回名字
+        /// </summary>
+        /// <returns></returns>
 		public string GetOwnerName()
 		{
 			return base.name;
 		}
 
-		// Token: 0x0600012A RID: 298 RVA: 0x0000B4FC File Offset: 0x000096FC
+		/// <summary>
+        /// 获得指定名字的共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
 		public SharedVariable GetVariable(string name)
 		{
 			this.mBehaviorSource.CheckForSerialization(false, null);
 			return this.mBehaviorSource.GetVariable(name);
 		}
 
-		// Token: 0x0600012B RID: 299 RVA: 0x0000B518 File Offset: 0x00009718
+		/// <summary>
+        /// 添加指定名字的共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="item"></param>
 		public void SetVariable(string name, SharedVariable item)
 		{
 			this.mBehaviorSource.CheckForSerialization(false, null);
 			this.mBehaviorSource.SetVariable(name, item);
 		}
 
-		// Token: 0x0600012C RID: 300 RVA: 0x0000B538 File Offset: 0x00009738
+		/// <summary>
+        /// 设置指定名字共享变量的值
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
 		public void SetVariableValue(string name, object value)
 		{
 			SharedVariable variable = this.GetVariable(name);
@@ -73,13 +99,22 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600012D RID: 301 RVA: 0x0000B560 File Offset: 0x00009760
+		/// <summary>
+        /// 获取指定类型的节点
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
 		public T FindTask<T>() where T : Task
 		{
 			return this.FindTask<T>(this.mBehaviorSource.RootTask);
 		}
 
-		// Token: 0x0600012E RID: 302 RVA: 0x0000B574 File Offset: 0x00009774
+		/// <summary>
+        /// 获取指定节点及以下的指定类型节点
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="task"></param>
+        /// <returns></returns>
 		private T FindTask<T>(Task task) where T : Task
 		{
 			if (task.GetType().Equals(typeof(T)))
@@ -101,7 +136,11 @@ namespace BehaviorDesigner.Runtime
 			return (T)((object)null);
 		}
 
-		// Token: 0x0600012F RID: 303 RVA: 0x0000B604 File Offset: 0x00009804
+		/// <summary>
+        /// 获取指定类型的节点列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
 		public List<T> FindTasks<T>() where T : Task
 		{
 			this.mBehaviorSource.CheckForSerialization(false, null);
@@ -110,7 +149,12 @@ namespace BehaviorDesigner.Runtime
 			return result;
 		}
 
-		// Token: 0x06000130 RID: 304 RVA: 0x0000B63C File Offset: 0x0000983C
+		/// <summary>
+        /// 获取指定节点及以下的指定类型的节点列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="task"></param>
+        /// <param name="taskList"></param>
 		private void FindTasks<T>(Task task, ref List<T> taskList) where T : Task
 		{
 			if (typeof(T).IsAssignableFrom(task.GetType()))
@@ -127,14 +171,23 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000131 RID: 305 RVA: 0x0000B6B8 File Offset: 0x000098B8
+		/// <summary>
+        /// 查找指定名字的节点
+        /// </summary>
+        /// <param name="taskName"></param>
+        /// <returns></returns>
 		public Task FindTaskWithName(string taskName)
 		{
 			this.mBehaviorSource.CheckForSerialization(false, null);
 			return this.FindTaskWithName(taskName, this.mBehaviorSource.RootTask);
 		}
 
-		// Token: 0x06000132 RID: 306 RVA: 0x0000B6E8 File Offset: 0x000098E8
+		/// <summary>
+        /// 查找指定节点及以下的的指定名字的节点
+        /// </summary>
+        /// <param name="taskName"></param>
+        /// <param name="task"></param>
+        /// <returns></returns>
 		private Task FindTaskWithName(string taskName, Task task)
 		{
 			if (task.FriendlyName.Equals(taskName))
@@ -156,7 +209,11 @@ namespace BehaviorDesigner.Runtime
 			return null;
 		}
 
-		// Token: 0x06000133 RID: 307 RVA: 0x0000B75C File Offset: 0x0000995C
+		/// <summary>
+        /// 查找指定名字的节点列表
+        /// </summary>
+        /// <param name="taskName"></param>
+        /// <returns></returns>
 		public List<Task> FindTasksWithName(string taskName)
 		{
 			List<Task> result = new List<Task>();
@@ -164,7 +221,12 @@ namespace BehaviorDesigner.Runtime
 			return result;
 		}
 
-		// Token: 0x06000134 RID: 308 RVA: 0x0000B784 File Offset: 0x00009984
+		/// <summary>
+        /// 查找指定节点及以下的指定名字的节点列表
+        /// </summary>
+        /// <param name="taskName"></param>
+        /// <param name="task"></param>
+        /// <param name="taskList"></param>
 		private void FindTasksWithName(string taskName, Task task, ref List<Task> taskList)
 		{
 			if (task.FriendlyName.Equals(taskName))

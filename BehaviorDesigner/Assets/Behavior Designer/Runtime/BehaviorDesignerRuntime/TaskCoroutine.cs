@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 
 namespace BehaviorDesigner.Runtime
 {
-	// Token: 0x02000039 RID: 57
+	/// <summary>
+    /// 任务协程
+    /// </summary>
 	public class TaskCoroutine
 	{
 		// Token: 0x0600021A RID: 538 RVA: 0x000100E4 File Offset: 0x0000E2E4
@@ -16,8 +18,9 @@ namespace BehaviorDesigner.Runtime
 			this.mCoroutine = parent.StartCoroutine(this.RunCoroutine());
 		}
 
-		// Token: 0x17000050 RID: 80
-		// (get) Token: 0x0600021B RID: 539 RVA: 0x00010114 File Offset: 0x0000E314
+		/// <summary>
+        /// 启动的协程对象
+        /// </summary>
 		public Coroutine Coroutine
 		{
 			get
@@ -26,13 +29,18 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600021C RID: 540 RVA: 0x0001011C File Offset: 0x0000E31C
+		/// <summary>
+        /// 停止
+        /// </summary>
 		public void Stop()
 		{
 			this.mStop = true;
 		}
 
-		// Token: 0x0600021D RID: 541 RVA: 0x00010128 File Offset: 0x0000E328
+		/// <summary>
+        /// 协程运行函数
+        /// </summary>
+        /// <returns></returns>
 		public IEnumerator RunCoroutine()
 		{
 			while (!this.mStop)
@@ -47,19 +55,29 @@ namespace BehaviorDesigner.Runtime
 			yield break;
 		}
 
-		// Token: 0x040000DC RID: 220
-		private IEnumerator mCoroutineEnumerator;
+        /// <summary>
+        /// 协程函数返回的 IEnumerator
+        /// </summary>
+        private IEnumerator mCoroutineEnumerator;
 
-		// Token: 0x040000DD RID: 221
-		private Coroutine mCoroutine;
+        /// <summary>
+        /// 启动的协程对象
+        /// </summary>
+        private Coroutine mCoroutine;
 
-		// Token: 0x040000DE RID: 222
+		/// <summary>
+        /// 行为树
+        /// </summary>
 		private Behavior mParent;
 
-		// Token: 0x040000DF RID: 223
+		/// <summary>
+        /// 协程名字
+        /// </summary>
 		private string mCoroutineName;
 
-		// Token: 0x040000E0 RID: 224
-		private bool mStop;
+        /// <summary>
+        /// 是否停止
+        /// </summary>
+        private bool mStop;
 	}
 }

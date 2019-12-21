@@ -1,15 +1,23 @@
-﻿using System;
+using System;
 
 namespace BehaviorDesigner.Runtime
 {
-	// Token: 0x02000007 RID: 7
+	/// <summary>
+    /// 行为树更新方式
+    /// </summary>
 	public enum UpdateIntervalType
 	{
-		// Token: 0x0400002C RID: 44
+		/// <summary>
+        /// 每帧
+        /// </summary>
 		EveryFrame,
-		// Token: 0x0400002D RID: 45
+		/// <summary>
+        /// 指定时间
+        /// </summary>
 		SpecifySeconds,
-		// Token: 0x0400002E RID: 46
+		/// <summary>
+        /// 自定义
+        /// </summary>
 		Manual
 	}
 }

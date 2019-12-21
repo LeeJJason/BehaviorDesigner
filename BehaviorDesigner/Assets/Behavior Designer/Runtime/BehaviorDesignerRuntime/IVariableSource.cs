@@ -1,24 +1,44 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace BehaviorDesigner.Runtime
 {
-	// Token: 0x0200001B RID: 27
+	/// <summary>
+    /// 变量控制接口
+    /// </summary>
 	public interface IVariableSource
 	{
-		// Token: 0x0600014F RID: 335
+		/// <summary>
+        /// 获取指定名字的共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
 		SharedVariable GetVariable(string name);
 
-		// Token: 0x06000150 RID: 336
+		/// <summary>
+        /// 获取所有的共享变量列表
+        /// </summary>
+        /// <returns></returns>
 		List<SharedVariable> GetAllVariables();
 
-		// Token: 0x06000151 RID: 337
+		/// <summary>
+        /// 添加指定名字的共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="sharedVariable"></param>
 		void SetVariable(string name, SharedVariable sharedVariable);
 
-		// Token: 0x06000152 RID: 338
+		/// <summary>
+        /// 更新指定共享变量的名字
+        /// </summary>
+        /// <param name="sharedVariable"></param>
+        /// <param name="name"></param>
 		void UpdateVariableName(SharedVariable sharedVariable, string name);
 
-		// Token: 0x06000153 RID: 339
+		/// <summary>
+        /// 设置共享变量的列表
+        /// </summary>
+        /// <param name="variables"></param>
 		void SetAllVariables(List<SharedVariable> variables);
 	}
 }

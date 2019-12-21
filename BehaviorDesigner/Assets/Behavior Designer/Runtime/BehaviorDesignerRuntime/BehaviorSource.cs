@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 
 namespace BehaviorDesigner.Runtime
 {
-	// Token: 0x02000011 RID: 17
+	/// <summary>
+    /// 行为树资源类，用于管理解析后的行为树资源对象
+    /// </summary>
 	[Serializable]
 	public class BehaviorSource : IVariableSource
 	{
@@ -14,15 +16,18 @@ namespace BehaviorDesigner.Runtime
 		{
 		}
 
-		// Token: 0x060000C7 RID: 199 RVA: 0x000079A4 File Offset: 0x00005BA4
-		public BehaviorSource(IBehavior owner)
+        /// <summary>
+        /// 为owner构建 BehaviorSource
+        /// </summary>
+        /// <param name="owner"></param>
+        public BehaviorSource(IBehavior owner)
 		{
 			this.Initialize(owner);
 		}
 
-		// Token: 0x1700001F RID: 31
-		// (get) Token: 0x060000C8 RID: 200 RVA: 0x000079DC File Offset: 0x00005BDC
-		// (set) Token: 0x060000C9 RID: 201 RVA: 0x000079E4 File Offset: 0x00005BE4
+		/// <summary>
+        /// 定义自己的ID标识
+        /// </summary>
 		public int BehaviorID
 		{
 			get
@@ -35,9 +40,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000020 RID: 32
-		// (get) Token: 0x060000CA RID: 202 RVA: 0x000079F0 File Offset: 0x00005BF0
-		// (set) Token: 0x060000CB RID: 203 RVA: 0x000079F8 File Offset: 0x00005BF8
+		/// <summary>
+        /// 行为树的入口节点
+        /// </summary>
 		public Task EntryTask
 		{
 			get
@@ -50,9 +55,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000021 RID: 33
-		// (get) Token: 0x060000CC RID: 204 RVA: 0x00007A04 File Offset: 0x00005C04
-		// (set) Token: 0x060000CD RID: 205 RVA: 0x00007A0C File Offset: 0x00005C0C
+		/// <summary>
+        /// 入口节点的第一个节点
+        /// </summary>
 		public Task RootTask
 		{
 			get
@@ -65,9 +70,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000022 RID: 34
-		// (get) Token: 0x060000CE RID: 206 RVA: 0x00007A18 File Offset: 0x00005C18
-		// (set) Token: 0x060000CF RID: 207 RVA: 0x00007A20 File Offset: 0x00005C20
+		/// <summary>
+        /// 分离的节点列表
+        /// </summary>
 		public List<Task> DetachedTasks
 		{
 			get
@@ -80,9 +85,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000023 RID: 35
-		// (get) Token: 0x060000D0 RID: 208 RVA: 0x00007A2C File Offset: 0x00005C2C
-		// (set) Token: 0x060000D1 RID: 209 RVA: 0x00007A40 File Offset: 0x00005C40
+		/// <summary>
+        /// 共享的变量列表
+        /// </summary>
 		public List<SharedVariable> Variables
 		{
 			get
@@ -97,9 +102,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000024 RID: 36
-		// (get) Token: 0x060000D2 RID: 210 RVA: 0x00007A50 File Offset: 0x00005C50
-		// (set) Token: 0x060000D3 RID: 211 RVA: 0x00007A58 File Offset: 0x00005C58
+		/// <summary>
+        /// 用于标记当前的行为树资源是否解析
+        /// </summary>
 		public bool HasSerialized
 		{
 			get
@@ -112,9 +117,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000025 RID: 37
-		// (get) Token: 0x060000D4 RID: 212 RVA: 0x00007A64 File Offset: 0x00005C64
-		// (set) Token: 0x060000D5 RID: 213 RVA: 0x00007A6C File Offset: 0x00005C6C
+		/// <summary>
+        /// 节点序列化信息
+        /// </summary>
 		public TaskSerializationData TaskData
 		{
 			get
@@ -127,9 +132,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000026 RID: 38
-		// (get) Token: 0x060000D6 RID: 214 RVA: 0x00007A78 File Offset: 0x00005C78
-		// (set) Token: 0x060000D7 RID: 215 RVA: 0x00007A80 File Offset: 0x00005C80
+		/// <summary>
+        /// 所属者
+        /// </summary>
 		public IBehavior Owner
 		{
 			get
@@ -142,13 +147,21 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x060000D8 RID: 216 RVA: 0x00007A8C File Offset: 0x00005C8C
+		/// <summary>
+        /// 初始化所熟者
+        /// </summary>
+        /// <param name="owner"></param>
 		public void Initialize(IBehavior owner)
 		{
 			this.mOwner = owner;
 		}
 
-		// Token: 0x060000D9 RID: 217 RVA: 0x00007A98 File Offset: 0x00005C98
+		/// <summary>
+        /// 设置相关信息
+        /// </summary>
+        /// <param name="entryTask"></param>
+        /// <param name="rootTask"></param>
+        /// <param name="detachedTasks"></param>
 		public void Save(Task entryTask, Task rootTask, List<Task> detachedTasks)
 		{
 			this.mEntryTask = entryTask;
@@ -156,7 +169,12 @@ namespace BehaviorDesigner.Runtime
 			this.mDetachedTasks = detachedTasks;
 		}
 
-		// Token: 0x060000DA RID: 218 RVA: 0x00007AB0 File Offset: 0x00005CB0
+		/// <summary>
+        /// 加载相关的信息
+        /// </summary>
+        /// <param name="entryTask"></param>
+        /// <param name="rootTask"></param>
+        /// <param name="detachedTasks"></param>
 		public void Load(out Task entryTask, out Task rootTask, out List<Task> detachedTasks)
 		{
 			entryTask = this.mEntryTask;
@@ -164,7 +182,12 @@ namespace BehaviorDesigner.Runtime
 			detachedTasks = this.mDetachedTasks;
 		}
 
-		// Token: 0x060000DB RID: 219 RVA: 0x00007ACC File Offset: 0x00005CCC
+		/// <summary>
+        /// 通过序列化信息解析数据
+        /// </summary>
+        /// <param name="force">强制解析</param>
+        /// <param name="behaviorSource"></param>
+        /// <returns></returns>
 		public bool CheckForSerialization(bool force, BehaviorSource behaviorSource = null)
 		{
 			bool flag = (behaviorSource == null) ? this.HasSerialized : behaviorSource.HasSerialized;
@@ -191,7 +214,11 @@ namespace BehaviorDesigner.Runtime
 			return false;
 		}
 
-		// Token: 0x060000DC RID: 220 RVA: 0x00007B70 File Offset: 0x00005D70
+		/// <summary>
+        /// 通过共享变量名获得共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
 		public SharedVariable GetVariable(string name)
 		{
 			if (name == null)
@@ -213,14 +240,21 @@ namespace BehaviorDesigner.Runtime
 			return null;
 		}
 
-		// Token: 0x060000DD RID: 221 RVA: 0x00007BE0 File Offset: 0x00005DE0
+		/// <summary>
+        /// 获取所有的共享变量列表
+        /// </summary>
+        /// <returns></returns>
 		public List<SharedVariable> GetAllVariables()
 		{
 			this.CheckForSerialization(false, null);
 			return this.mVariables;
 		}
 
-		// Token: 0x060000DE RID: 222 RVA: 0x00007BF4 File Offset: 0x00005DF4
+		/// <summary>
+        /// 设置指定名字的共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="sharedVariable"></param>
 		public void SetVariable(string name, SharedVariable sharedVariable)
 		{
 			if (this.mVariables == null)
@@ -258,7 +292,11 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x060000DF RID: 223 RVA: 0x00007D08 File Offset: 0x00005F08
+		/// <summary>
+        /// 更新共享变量的名字
+        /// </summary>
+        /// <param name="sharedVariable"></param>
+        /// <param name="name"></param>
 		public void UpdateVariableName(SharedVariable sharedVariable, string name)
 		{
 			this.CheckForSerialization(false, null);
@@ -266,15 +304,20 @@ namespace BehaviorDesigner.Runtime
 			this.UpdateVariablesIndex();
 		}
 
-		// Token: 0x060000E0 RID: 224 RVA: 0x00007D20 File Offset: 0x00005F20
+		/// <summary>
+        /// 更新所有的共享变量列表
+        /// </summary>
+        /// <param name="variables"></param>
 		public void SetAllVariables(List<SharedVariable> variables)
 		{
 			this.mVariables = variables;
 			this.UpdateVariablesIndex();
 		}
 
-		// Token: 0x060000E1 RID: 225 RVA: 0x00007D30 File Offset: 0x00005F30
-		private void UpdateVariablesIndex()
+        /// <summary>
+        /// 通过 共享变量列表 更新 共享变量名索引表
+        /// </summary>
+        private void UpdateVariablesIndex()
 		{
 			if (this.mVariables == null)
 			{
@@ -311,39 +354,61 @@ namespace BehaviorDesigner.Runtime
 			return string.Format("{0} - {1}", this.Owner.GetOwnerName(), this.behaviorName);
 		}
 
-		// Token: 0x0400006F RID: 111
-		public string behaviorName = "Behavior";
+        /// <summary>
+        /// 行为树名
+        /// </summary>
+        public string behaviorName = "Behavior";
 
-		// Token: 0x04000070 RID: 112
+		/// <summary>
+        /// 行为树描述
+        /// </summary>
 		public string behaviorDescription = string.Empty;
 
-		// Token: 0x04000071 RID: 113
+		/// <summary>
+        /// 定义ID
+        /// </summary>
 		private int behaviorID = -1;
 
-		// Token: 0x04000072 RID: 114
+		/// <summary>
+        /// 行为树的入口节点
+        /// </summary>
 		private Task mEntryTask;
 
-		// Token: 0x04000073 RID: 115
+		/// <summary>
+        /// 入口节点的子节点
+        /// </summary>
 		private Task mRootTask;
 
-		// Token: 0x04000074 RID: 116
+		/// <summary>
+        /// 分离的节点
+        /// </summary>
 		private List<Task> mDetachedTasks;
 
-		// Token: 0x04000075 RID: 117
+		/// <summary>
+        /// 共享的变量
+        /// </summary>
 		private List<SharedVariable> mVariables;
 
-		// Token: 0x04000076 RID: 118
+		/// <summary>
+        /// 共享变量的名字与列表索引的对应
+        /// </summary>
 		private Dictionary<string, int> mSharedVariableIndex;
 
-		// Token: 0x04000077 RID: 119
+		/// <summary>
+        /// 是否解析
+        /// </summary>
 		[NonSerialized]
 		private bool mHasSerialized;
 
-		// Token: 0x04000078 RID: 120
+		/// <summary>
+        /// 序列化的节点信息
+        /// </summary>
 		[SerializeField]
 		private TaskSerializationData mTaskData;
 
-		// Token: 0x04000079 RID: 121
+		/// <summary>
+        /// 所属者
+        /// </summary>
 		[SerializeField]
 		private IBehavior mOwner;
 	}

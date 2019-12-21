@@ -3,31 +3,60 @@ using UnityEngine;
 
 namespace BehaviorDesigner.Runtime
 {
-	// Token: 0x0200001A RID: 26
+	/// <summary>
+    /// 行为树的抽象接口
+    /// </summary>
 	public interface IBehavior
 	{
-		// Token: 0x06000147 RID: 327
+		/// <summary>
+        /// 获取所属者名称
+        /// </summary>
+        /// <returns></returns>
 		string GetOwnerName();
 
-		// Token: 0x06000148 RID: 328
+		/// <summary>
+        /// 获得实例ID
+        /// </summary>
+        /// <returns></returns>
 		int GetInstanceID();
 
-		// Token: 0x06000149 RID: 329
-		BehaviorSource GetBehaviorSource();
+        /// <summary>
+        /// 返回 BehaviorSource
+        /// </summary>
+        /// <returns></returns>
+        BehaviorSource GetBehaviorSource();
 
-		// Token: 0x0600014A RID: 330
-		void SetBehaviorSource(BehaviorSource behaviorSource);
+        /// <summary>
+        /// 设置 BehaviorSource
+        /// </summary>
+        /// <param name="behaviorSource"></param>
+        void SetBehaviorSource(BehaviorSource behaviorSource);
 
-		// Token: 0x0600014B RID: 331
+		/// <summary>
+        /// 获得资源对象
+        /// </summary>
+        /// <returns></returns>
 		UnityEngine.Object GetObject();
 
-		// Token: 0x0600014C RID: 332
+		/// <summary>
+        /// 通过共享名，获得共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
 		SharedVariable GetVariable(string name);
 
-		// Token: 0x0600014D RID: 333
+		/// <summary>
+        /// 通过名字添加共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="item"></param>
 		void SetVariable(string name, SharedVariable item);
 
-		// Token: 0x0600014E RID: 334
+		/// <summary>
+        /// 通过名字设置共享变量的值
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
 		void SetVariableValue(string name, object value);
 	}
 }

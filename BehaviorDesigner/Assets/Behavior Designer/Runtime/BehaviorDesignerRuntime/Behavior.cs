@@ -7,34 +7,38 @@ using UnityEngine;
 
 namespace BehaviorDesigner.Runtime
 {
-	// Token: 0x02000002 RID: 2
-	[Serializable]
+    /// <summary>
+    /// BehaviorTree 的基类，行为树的真正对象
+    /// </summary>
+    [Serializable]
 	public abstract class Behavior : MonoBehaviour, IBehavior
 	{
-		// Token: 0x06000001 RID: 1 RVA: 0x000020EC File Offset: 0x000002EC
-		public Behavior()
+        /// <summary>
+        /// 初始化 BehaviorSource 对象
+        /// </summary>
+        public Behavior()
 		{
 			this.mBehaviorSource = new BehaviorSource(this);
 		}
 
-		// Token: 0x14000001 RID: 1
-		// (add) Token: 0x06000002 RID: 2 RVA: 0x0000211C File Offset: 0x0000031C
-		// (remove) Token: 0x06000003 RID: 3 RVA: 0x00002138 File Offset: 0x00000338
+		/// <summary>
+        /// 行为树启动后的回调
+        /// </summary>
 		public event Behavior.BehaviorHandler OnBehaviorStart;
 
-		// Token: 0x14000002 RID: 2
-		// (add) Token: 0x06000004 RID: 4 RVA: 0x00002154 File Offset: 0x00000354
-		// (remove) Token: 0x06000005 RID: 5 RVA: 0x00002170 File Offset: 0x00000370
+		/// <summary>
+        /// 行为树重新启动的回调
+        /// </summary>
 		public event Behavior.BehaviorHandler OnBehaviorRestart;
 
-		// Token: 0x14000003 RID: 3
-		// (add) Token: 0x06000006 RID: 6 RVA: 0x0000218C File Offset: 0x0000038C
-		// (remove) Token: 0x06000007 RID: 7 RVA: 0x000021A8 File Offset: 0x000003A8
+		/// <summary>
+        /// 行为树结束回调
+        /// </summary>
 		public event Behavior.BehaviorHandler OnBehaviorEnd;
 
-		// Token: 0x17000001 RID: 1
-		// (get) Token: 0x06000008 RID: 8 RVA: 0x000021C4 File Offset: 0x000003C4
-		// (set) Token: 0x06000009 RID: 9 RVA: 0x000021CC File Offset: 0x000003CC
+		/// <summary>
+        /// 当对象激活时自动启动
+        /// </summary>
 		public bool StartWhenEnabled
 		{
 			get
@@ -47,9 +51,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000002 RID: 2
-		// (get) Token: 0x0600000A RID: 10 RVA: 0x000021D8 File Offset: 0x000003D8
-		// (set) Token: 0x0600000B RID: 11 RVA: 0x000021E0 File Offset: 0x000003E0
+		/// <summary>
+        /// disable 时为暂停
+        /// </summary>
 		public bool PauseWhenDisabled
 		{
 			get
@@ -62,9 +66,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000003 RID: 3
-		// (get) Token: 0x0600000C RID: 12 RVA: 0x000021EC File Offset: 0x000003EC
-		// (set) Token: 0x0600000D RID: 13 RVA: 0x000021F4 File Offset: 0x000003F4
+		/// <summary>
+        /// 完成后重新开始
+        /// </summary>
 		public bool RestartWhenComplete
 		{
 			get
@@ -77,9 +81,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000004 RID: 4
-		// (get) Token: 0x0600000E RID: 14 RVA: 0x00002200 File Offset: 0x00000400
-		// (set) Token: 0x0600000F RID: 15 RVA: 0x00002208 File Offset: 0x00000408
+		/// <summary>
+        /// 任务变化时是否打印日志
+        /// </summary>
 		public bool LogTaskChanges
 		{
 			get
@@ -92,9 +96,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000005 RID: 5
-		// (get) Token: 0x06000010 RID: 16 RVA: 0x00002214 File Offset: 0x00000414
-		// (set) Token: 0x06000011 RID: 17 RVA: 0x0000221C File Offset: 0x0000041C
+		/// <summary>
+        /// 组定义
+        /// </summary>
 		public int Group
 		{
 			get
@@ -107,9 +111,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000006 RID: 6
-		// (get) Token: 0x06000012 RID: 18 RVA: 0x00002228 File Offset: 0x00000428
-		// (set) Token: 0x06000013 RID: 19 RVA: 0x00002230 File Offset: 0x00000430
+		/// <summary>
+        /// 重新启动时充值变量
+        /// </summary>
 		public bool ResetValuesOnRestart
 		{
 			get
@@ -122,9 +126,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000007 RID: 7
-		// (get) Token: 0x06000014 RID: 20 RVA: 0x0000223C File Offset: 0x0000043C
-		// (set) Token: 0x06000015 RID: 21 RVA: 0x00002244 File Offset: 0x00000444
+		/// <summary>
+        /// 行为树的资源文件对象
+        /// </summary>
 		public ExternalBehavior ExternalBehavior
 		{
 			get
@@ -147,9 +151,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000008 RID: 8
-		// (get) Token: 0x06000016 RID: 22 RVA: 0x00002298 File Offset: 0x00000498
-		// (set) Token: 0x06000017 RID: 23 RVA: 0x000022A0 File Offset: 0x000004A0
+		/// <summary>
+        /// 标记是否继承过变量
+        /// </summary>
 		public bool HasInheritedVariables
 		{
 			get
@@ -162,9 +166,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x17000009 RID: 9
-		// (get) Token: 0x06000018 RID: 24 RVA: 0x000022AC File Offset: 0x000004AC
-		// (set) Token: 0x06000019 RID: 25 RVA: 0x000022BC File Offset: 0x000004BC
+		/// <summary>
+        /// 名字
+        /// </summary>
 		public string BehaviorName
 		{
 			get
@@ -177,9 +181,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x1700000A RID: 10
-		// (get) Token: 0x0600001A RID: 26 RVA: 0x000022CC File Offset: 0x000004CC
-		// (set) Token: 0x0600001B RID: 27 RVA: 0x000022DC File Offset: 0x000004DC
+		/// <summary>
+        /// 描述
+        /// </summary>
 		public string BehaviorDescription
 		{
 			get
@@ -192,33 +196,45 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600001C RID: 28 RVA: 0x000022EC File Offset: 0x000004EC
-		public BehaviorSource GetBehaviorSource()
+        /// <summary>
+        /// 返回 BehaviorSource
+        /// </summary>
+        /// <returns></returns>
+        public BehaviorSource GetBehaviorSource()
 		{
 			return this.mBehaviorSource;
 		}
 
-		// Token: 0x0600001D RID: 29 RVA: 0x000022F4 File Offset: 0x000004F4
+		/// <summary>
+        /// 设置
+        /// </summary>
+        /// <param name="behaviorSource"></param>
 		public void SetBehaviorSource(BehaviorSource behaviorSource)
 		{
 			this.mBehaviorSource = behaviorSource;
 		}
 
-		// Token: 0x0600001E RID: 30 RVA: 0x00002300 File Offset: 0x00000500
+		/// <summary>
+        /// 返回当前对象
+        /// </summary>
+        /// <returns></returns>
 		public UnityEngine.Object GetObject()
 		{
 			return this;
 		}
 
-		// Token: 0x0600001F RID: 31 RVA: 0x00002304 File Offset: 0x00000504
+		/// <summary>
+        /// 返回游戏对象
+        /// </summary>
+        /// <returns></returns>
 		public string GetOwnerName()
 		{
 			return base.gameObject.name;
 		}
 
-		// Token: 0x1700000B RID: 11
-		// (get) Token: 0x06000020 RID: 32 RVA: 0x00002314 File Offset: 0x00000514
-		// (set) Token: 0x06000021 RID: 33 RVA: 0x0000231C File Offset: 0x0000051C
+		/// <summary>
+        /// 获取当前的运行状态
+        /// </summary>
 		public TaskStatus ExecutionStatus
 		{
 			get
@@ -231,8 +247,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x1700000C RID: 12
-		// (get) Token: 0x06000022 RID: 34 RVA: 0x00002328 File Offset: 0x00000528
+		/// <summary>
+        /// 具有哪些事件
+        /// </summary>
 		public bool[] HasEvent
 		{
 			get
@@ -241,7 +258,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000023 RID: 35 RVA: 0x00002330 File Offset: 0x00000530
+		/// <summary>
+        /// 启动时自动启动
+        /// </summary>
 		public void Start()
 		{
 			if (this.startWhenEnabled)
@@ -250,8 +269,13 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000024 RID: 36 RVA: 0x00002344 File Offset: 0x00000544
-		private bool TaskContainsMethod(string methodName, Task task)
+        /// <summary>
+        /// task 中是否包含 methodName 方法
+        /// </summary>
+        /// <param name="methodName"></param>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        private bool TaskContainsMethod(string methodName, Task task)
 		{
 			if (task == null)
 			{
@@ -279,8 +303,10 @@ namespace BehaviorDesigner.Runtime
 			return false;
 		}
 
-		// Token: 0x06000025 RID: 37 RVA: 0x000023DC File Offset: 0x000005DC
-		public void EnableBehavior()
+        /// <summary>
+        /// 启动行为树，创建 BehaviorManager 实例
+        /// </summary>
+        public void EnableBehavior()
 		{
 			Behavior.CreateBehaviorManager();
 			if (BehaviorManager.instance != null)
@@ -298,7 +324,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000026 RID: 38 RVA: 0x00002454 File Offset: 0x00000654
+		/// <summary>
+        /// 关闭行为树
+        /// </summary>
 		public void DisableBehavior()
 		{
 			if (BehaviorManager.instance != null)
@@ -308,7 +336,10 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000027 RID: 39 RVA: 0x00002484 File Offset: 0x00000684
+		/// <summary>
+        /// 暂停行为树  关闭行为树
+        /// </summary>
+        /// <param name="pause"></param>
 		public void DisableBehavior(bool pause)
 		{
 			if (BehaviorManager.instance != null)
@@ -318,8 +349,10 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000028 RID: 40 RVA: 0x000024AC File Offset: 0x000006AC
-		public void OnEnable()
+        /// <summary>
+        /// Unity 对象OnEnable事件
+        /// </summary>
+        public void OnEnable()
 		{
 			if (BehaviorManager.instance != null && this.isPaused)
 			{
@@ -332,14 +365,18 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000029 RID: 41 RVA: 0x00002508 File Offset: 0x00000708
-		public void OnDisable()
+        /// <summary>
+        /// Unity 对象OnDisable事件
+        /// </summary>
+        public void OnDisable()
 		{
 			this.DisableBehavior();
 		}
 
-		// Token: 0x0600002A RID: 42 RVA: 0x00002510 File Offset: 0x00000710
-		public void OnDestroy()
+        /// <summary>
+        /// Unity 对象OnDestroy事件
+        /// </summary>
+        public void OnDestroy()
 		{
 			if (BehaviorManager.instance != null)
 			{
@@ -347,21 +384,33 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600002B RID: 43 RVA: 0x00002530 File Offset: 0x00000730
+		/// <summary>
+        /// 获取指定名字的共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
 		public SharedVariable GetVariable(string name)
 		{
 			this.CheckForSerialization();
 			return this.mBehaviorSource.GetVariable(name);
 		}
 
-		// Token: 0x0600002C RID: 44 RVA: 0x00002544 File Offset: 0x00000744
+		/// <summary>
+        /// 设置指定名字的共享变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="item"></param>
 		public void SetVariable(string name, SharedVariable item)
 		{
 			this.CheckForSerialization();
 			this.mBehaviorSource.SetVariable(name, item);
 		}
 
-		// Token: 0x0600002D RID: 45 RVA: 0x0000255C File Offset: 0x0000075C
+		/// <summary>
+        /// 设置指定共享名字变量的值
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
 		public void SetVariableValue(string name, object value)
 		{
 			SharedVariable variable = this.GetVariable(name);
@@ -376,14 +425,19 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600002E RID: 46 RVA: 0x0000259C File Offset: 0x0000079C
+		/// <summary>
+        /// 返回所有的共享变量列表
+        /// </summary>
+        /// <returns></returns>
 		public List<SharedVariable> GetAllVariables()
 		{
 			this.CheckForSerialization();
 			return this.mBehaviorSource.GetAllVariables();
 		}
 
-		// Token: 0x0600002F RID: 47 RVA: 0x000025B0 File Offset: 0x000007B0
+		/// <summary>
+        /// 反序列化资源
+        /// </summary>
 		public void CheckForSerialization()
 		{
 			if (this.externalBehavior != null)
@@ -517,24 +571,25 @@ namespace BehaviorDesigner.Runtime
 		// Token: 0x0600003B RID: 59 RVA: 0x0000286C File Offset: 0x00000A6C
 		private void DrawTaskGizmos(bool selected)
 		{
-			if (this.gizmoViewMode == Behavior.GizmoViewMode.Never || (this.gizmoViewMode == Behavior.GizmoViewMode.Selected && !selected))
-			{
-				return;
-			}
-			if (this.gizmoViewMode == Behavior.GizmoViewMode.Running || this.gizmoViewMode == Behavior.GizmoViewMode.Always || (Application.isPlaying && this.ExecutionStatus == TaskStatus.Running) || !Application.isPlaying)
-			{
-				this.CheckForSerialization();
-				this.DrawTaskGizmos(this.mBehaviorSource.RootTask);
-				List<Task> detachedTasks = this.mBehaviorSource.DetachedTasks;
-				if (detachedTasks != null)
-				{
-					for (int i = 0; i < detachedTasks.Count; i++)
-					{
-						this.DrawTaskGizmos(detachedTasks[i]);
-					}
-				}
-			}
-		}
+
+            if (this.gizmoViewMode == Behavior.GizmoViewMode.Never || (this.gizmoViewMode == Behavior.GizmoViewMode.Selected && !selected))
+            {
+                return;
+            }
+            if (this.gizmoViewMode == Behavior.GizmoViewMode.Running || this.gizmoViewMode == Behavior.GizmoViewMode.Always || (Application.isPlaying && this.ExecutionStatus == TaskStatus.Running) || !Application.isPlaying)
+            {
+                this.CheckForSerialization();
+                this.DrawTaskGizmos(this.mBehaviorSource.RootTask);
+                List<Task> detachedTasks = this.mBehaviorSource.DetachedTasks;
+                if (detachedTasks != null)
+                {
+                    for (int i = 0; i < detachedTasks.Count; i++)
+                    {
+                        this.DrawTaskGizmos(detachedTasks[i]);
+                    }
+                }
+            }
+        }
 
 		// Token: 0x0600003C RID: 60 RVA: 0x0000291C File Offset: 0x00000B1C
 		private void DrawTaskGizmos(Task task)
@@ -644,8 +699,12 @@ namespace BehaviorDesigner.Runtime
 			return null;
 		}
 
-		// Token: 0x06000043 RID: 67 RVA: 0x00002BA0 File Offset: 0x00000DA0
-		public List<Task> FindTasksWithName(string taskName)
+        /// <summary>
+        /// 查找行为树中所有 FriendlyName 为 taskName 的任务节点
+        /// </summary>
+        /// <param name="taskName"></param>
+        /// <returns></returns>
+        public List<Task> FindTasksWithName(string taskName)
 		{
 			this.CheckForSerialization();
 			List<Task> result = new List<Task>();
@@ -653,8 +712,13 @@ namespace BehaviorDesigner.Runtime
 			return result;
 		}
 
-		// Token: 0x06000044 RID: 68 RVA: 0x00002BD0 File Offset: 0x00000DD0
-		private void FindTasksWithName(string taskName, Task task, ref List<Task> taskList)
+        /// <summary>
+        /// 查找 task 下 FriendlyName 为 taskName 的所有任务列表
+        /// </summary>
+        /// <param name="taskName"></param>
+        /// <param name="task"></param>
+        /// <param name="taskList"></param>
+        private void FindTasksWithName(string taskName, Task task, ref List<Task> taskList)
 		{
 			if (task.FriendlyName.Equals(taskName))
 			{
@@ -670,7 +734,10 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000045 RID: 69 RVA: 0x00002C40 File Offset: 0x00000E40
+		/// <summary>
+        /// 获取行为树中所有激活的任务列表
+        /// </summary>
+        /// <returns></returns>
 		public List<Task> GetActiveTasks()
 		{
 			if (BehaviorManager.instance == null)
@@ -680,8 +747,13 @@ namespace BehaviorDesigner.Runtime
 			return BehaviorManager.instance.GetActiveTasks(this);
 		}
 
-		// Token: 0x06000046 RID: 70 RVA: 0x00002C60 File Offset: 0x00000E60
-		public Coroutine StartTaskCoroutine(Task task, string methodName)
+        /// <summary>
+        /// 通过 task 的 methodName 启动协程 
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
+        public Coroutine StartTaskCoroutine(Task task, string methodName)
 		{
 			MethodInfo method = task.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			if (method == null)
@@ -709,8 +781,14 @@ namespace BehaviorDesigner.Runtime
 			return taskCoroutine.Coroutine;
 		}
 
-		// Token: 0x06000047 RID: 71 RVA: 0x00002D20 File Offset: 0x00000F20
-		public Coroutine StartTaskCoroutine(Task task, string methodName, object value)
+        /// <summary>
+        /// 通过 task 的 methodName 启动协程 
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="methodName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Coroutine StartTaskCoroutine(Task task, string methodName, object value)
 		{
 			MethodInfo method = task.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			if (method == null)
@@ -741,8 +819,11 @@ namespace BehaviorDesigner.Runtime
 			return taskCoroutine.Coroutine;
 		}
 
-		// Token: 0x06000048 RID: 72 RVA: 0x00002DE4 File Offset: 0x00000FE4
-		public void StopTaskCoroutine(string methodName)
+        /// <summary>
+        /// 停止名字为 methodName 的所有 TaskCoroutine
+        /// </summary>
+        /// <param name="methodName"></param>
+        public void StopTaskCoroutine(string methodName)
 		{
 			if (!this.activeTaskCoroutines.ContainsKey(methodName))
 			{
@@ -755,8 +836,10 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000049 RID: 73 RVA: 0x00002E34 File Offset: 0x00001034
-		public void StopAllTaskCoroutines()
+        /// <summary>
+        /// 停止所有的 TaskCoroutine
+        /// </summary>
+        public void StopAllTaskCoroutines()
 		{
 			base.StopAllCoroutines();
 			foreach (KeyValuePair<string, List<TaskCoroutine>> keyValuePair in this.activeTaskCoroutines)
@@ -769,8 +852,12 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600004A RID: 74 RVA: 0x00002EC4 File Offset: 0x000010C4
-		public void TaskCoroutineEnded(TaskCoroutine taskCoroutine, string coroutineName)
+        /// <summary>
+        /// 某个 TaskCoroutine 完成后通知清理
+        /// </summary>
+        /// <param name="taskCoroutine"></param>
+        /// <param name="coroutineName"></param>
+        public void TaskCoroutineEnded(TaskCoroutine taskCoroutine, string coroutineName)
 		{
 			if (this.activeTaskCoroutines.ContainsKey(coroutineName))
 			{
@@ -787,7 +874,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600004B RID: 75 RVA: 0x00002F24 File Offset: 0x00001124
+		/// <summary>
+        /// 启动事件
+        /// </summary>
 		public void OnBehaviorStarted()
 		{
 			if (this.OnBehaviorStart != null)
@@ -796,7 +885,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600004C RID: 76 RVA: 0x00002F3C File Offset: 0x0000113C
+		/// <summary>
+        /// 重新启动事件
+        /// </summary>
 		public void OnBehaviorRestarted()
 		{
 			if (this.OnBehaviorRestart != null)
@@ -805,7 +896,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600004D RID: 77 RVA: 0x00002F54 File Offset: 0x00001154
+		/// <summary>
+        /// 结束事件
+        /// </summary>
 		public void OnBehaviorEnded()
 		{
 			if (this.OnBehaviorEnd != null)
@@ -814,7 +907,11 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600004E RID: 78 RVA: 0x00002F6C File Offset: 0x0000116C
+		/// <summary>
+        /// 注册事件
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
 		private void RegisterEvent(string name, Delegate handler)
 		{
 			if (this.eventTable == null)
@@ -838,31 +935,58 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600004F RID: 79 RVA: 0x00002FE8 File Offset: 0x000011E8
-		public void RegisterEvent(string name, System.Action handler)
+        /// <summary>
+        /// 注册事件
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void RegisterEvent(string name, System.Action handler)
 		{
-			this.RegisterEvent(name, handler);
+			this.RegisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x06000050 RID: 80 RVA: 0x00002FF4 File Offset: 0x000011F4
-		public void RegisterEvent<T>(string name, Action<T> handler)
+        /// <summary>
+        /// 注册事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void RegisterEvent<T>(string name, Action<T> handler)
 		{
-			this.RegisterEvent(name, handler);
+			this.RegisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x06000051 RID: 81 RVA: 0x00003000 File Offset: 0x00001200
-		public void RegisterEvent<T, U>(string name, Action<T, U> handler)
+        /// <summary>
+        /// 注册事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void RegisterEvent<T, U>(string name, Action<T, U> handler)
 		{
-			this.RegisterEvent(name, handler);
+			this.RegisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x06000052 RID: 82 RVA: 0x0000300C File Offset: 0x0000120C
-		public void RegisterEvent<T, U, V>(string name, Action<T, U, V> handler)
+        /// <summary>
+        /// 注册事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void RegisterEvent<T, U, V>(string name, Action<T, U, V> handler)
 		{
-			this.RegisterEvent(name, handler);
+			this.RegisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x06000053 RID: 83 RVA: 0x00003018 File Offset: 0x00001218
+		/// <summary>
+        /// 获取指定
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
 		private Delegate GetDelegate(string name, Type type)
 		{
 			Dictionary<string, Delegate> dictionary;
@@ -874,7 +998,10 @@ namespace BehaviorDesigner.Runtime
 			return null;
 		}
 
-		// Token: 0x06000054 RID: 84 RVA: 0x00003054 File Offset: 0x00001254
+		/// <summary>
+        /// 发送事件
+        /// </summary>
+        /// <param name="name"></param>
 		public void SendEvent(string name)
 		{
 			System.Action action = this.GetDelegate(name, typeof(System.Action)) as System.Action;
@@ -884,8 +1011,13 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000055 RID: 85 RVA: 0x00003084 File Offset: 0x00001284
-		public void SendEvent<T>(string name, T arg1)
+        /// <summary>
+        /// 发送事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="arg1"></param>
+        public void SendEvent<T>(string name, T arg1)
 		{
 			Action<T> action = this.GetDelegate(name, typeof(Action<T>)) as Action<T>;
 			if (action != null)
@@ -894,8 +1026,15 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000056 RID: 86 RVA: 0x000030B8 File Offset: 0x000012B8
-		public void SendEvent<T, U>(string name, T arg1, U arg2)
+        /// <summary>
+        /// 发送事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="arg1"></param>
+        /// <param name="arg2"></param>
+        public void SendEvent<T, U>(string name, T arg1, U arg2)
 		{
 			Action<T, U> action = this.GetDelegate(name, typeof(Action<T, U>)) as Action<T, U>;
 			if (action != null)
@@ -904,8 +1043,17 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000057 RID: 87 RVA: 0x000030EC File Offset: 0x000012EC
-		public void SendEvent<T, U, V>(string name, T arg1, U arg2, V arg3)
+        /// <summary>
+        /// 发送事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="arg1"></param>
+        /// <param name="arg2"></param>
+        /// <param name="arg3"></param>
+        public void SendEvent<T, U, V>(string name, T arg1, U arg2, V arg3)
 		{
 			Action<T, U, V> action = this.GetDelegate(name, typeof(Action<T, U, V>)) as Action<T, U, V>;
 			if (action != null)
@@ -914,7 +1062,11 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000058 RID: 88 RVA: 0x00003120 File Offset: 0x00001320
+		/// <summary>
+        /// 取消事件注册
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
 		private void UnregisterEvent(string name, Delegate handler)
 		{
 			if (this.eventTable == null)
@@ -929,31 +1081,55 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000059 RID: 89 RVA: 0x00003170 File Offset: 0x00001370
-		public void UnregisterEvent(string name, System.Action handler)
+        /// <summary>
+        /// 取消事件注册
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void UnregisterEvent(string name, System.Action handler)
 		{
-			this.UnregisterEvent(name, handler);
+			this.UnregisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x0600005A RID: 90 RVA: 0x0000317C File Offset: 0x0000137C
-		public void UnregisterEvent<T>(string name, Action<T> handler)
+        /// <summary>
+        /// 取消事件注册
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void UnregisterEvent<T>(string name, Action<T> handler)
 		{
-			this.UnregisterEvent(name, handler);
+			this.UnregisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x0600005B RID: 91 RVA: 0x00003188 File Offset: 0x00001388
-		public void UnregisterEvent<T, U>(string name, Action<T, U> handler)
+        /// <summary>
+        /// 取消事件注册
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void UnregisterEvent<T, U>(string name, Action<T, U> handler)
 		{
-			this.UnregisterEvent(name, handler);
+			this.UnregisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x0600005C RID: 92 RVA: 0x00003194 File Offset: 0x00001394
-		public void UnregisterEvent<T, U, V>(string name, Action<T, U, V> handler)
+        /// <summary>
+        /// 取消事件注册
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="handler"></param>
+        public void UnregisterEvent<T, U, V>(string name, Action<T, U, V> handler)
 		{
-			this.UnregisterEvent(name, handler);
+			this.UnregisterEvent(name, handler as Delegate);
 		}
 
-		// Token: 0x0600005D RID: 93 RVA: 0x000031A0 File Offset: 0x000013A0
+		/// <summary>
+        /// 保存需要重置的值
+        /// </summary>
 		public void SaveResetValues()
 		{
 			if (this.defaultValues == null)
@@ -968,7 +1144,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600005E RID: 94 RVA: 0x000031E0 File Offset: 0x000013E0
+		/// <summary>
+        /// 将需要重置的值缓存起来
+        /// </summary>
 		private void SaveValues()
 		{
 			List<SharedVariable> allVariables = this.mBehaviorSource.GetAllVariables();
@@ -982,7 +1160,10 @@ namespace BehaviorDesigner.Runtime
 			this.SaveValue(this.mBehaviorSource.RootTask);
 		}
 
-		// Token: 0x0600005F RID: 95 RVA: 0x0000324C File Offset: 0x0000144C
+		/// <summary>
+        /// 保存任务的默认值
+        /// </summary>
+        /// <param name="task"></param>
 		private void SaveValue(Task task)
 		{
 			if (task == null)
@@ -1025,7 +1206,9 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000060 RID: 96 RVA: 0x00003338 File Offset: 0x00001538
+		/// <summary>
+        /// 重置行为树的默认值
+        /// </summary>
 		private void ResetValues()
 		{
 			foreach (KeyValuePair<string, object> keyValuePair in this.defaultVariableValues)
@@ -1036,7 +1219,11 @@ namespace BehaviorDesigner.Runtime
 			this.ResetValue(this.mBehaviorSource.RootTask, ref num);
 		}
 
-		// Token: 0x06000061 RID: 97 RVA: 0x000033C0 File Offset: 0x000015C0
+		/// <summary>
+        /// 重置任务节点的默认数据
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="index"></param>
 		private void ResetValue(Task task, ref int index)
 		{
 			if (task == null || index >= this.defaultValues.Count)
@@ -1066,14 +1253,16 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000062 RID: 98 RVA: 0x000034C4 File Offset: 0x000016C4
 		public override string ToString()
 		{
 			return this.mBehaviorSource.ToString();
 		}
 
-		// Token: 0x06000063 RID: 99 RVA: 0x000034D4 File Offset: 0x000016D4
-		public static BehaviorManager CreateBehaviorManager()
+        /// <summary>
+        /// 构造 BehaviorManager
+        /// </summary> 
+        /// <returns></returns>
+        public static BehaviorManager CreateBehaviorManager()
 		{
 			if (BehaviorManager.instance == null && Application.isPlaying)
 			{
@@ -1091,117 +1280,141 @@ namespace BehaviorDesigner.Runtime
 			return base.GetInstanceID();
 		}
 
-		// Token: 0x04000001 RID: 1
+		/// <summary>
+        /// 标记为自动启动
+        /// </summary>
 		[SerializeField]
 		private bool startWhenEnabled = true;
 
-		// Token: 0x04000002 RID: 2
-		[SerializeField]
+        /// <summary>
+        /// disable 时为暂停
+        /// </summary>
+        [SerializeField]
 		private bool pauseWhenDisabled;
 
-		// Token: 0x04000003 RID: 3
+		/// <summary>
+        /// 结束后重新启动
+        /// </summary>
 		[SerializeField]
 		private bool restartWhenComplete;
 
-		// Token: 0x04000004 RID: 4
+		/// <summary>
+        /// 打印节点变化日志
+        /// </summary>
 		[SerializeField]
 		private bool logTaskChanges;
 
-		// Token: 0x04000005 RID: 5
+		/// <summary>
+        /// 组ID
+        /// </summary>
 		[SerializeField]
 		private int group;
 
-		// Token: 0x04000006 RID: 6
-		[SerializeField]
+        /// <summary>
+        /// Restart 时重置
+        /// </summary>
+        [SerializeField]
 		private bool resetValuesOnRestart;
 
-		// Token: 0x04000007 RID: 7
-		[SerializeField]
+        /// <summary>
+        /// 行为树的资源文件对象
+        /// </summary>
+        [SerializeField]
 		private ExternalBehavior externalBehavior;
 
-		// Token: 0x04000008 RID: 8
-		private bool hasInheritedVariables;
+        /// <summary>
+        /// 标记是否继承过变量
+        /// </summary>
+        private bool hasInheritedVariables;
 
-		// Token: 0x04000009 RID: 9
+		/// <summary>
+        /// 行为树资源管理对象，Behavior 实例化时初始化
+        /// </summary>
 		[SerializeField]
 		private BehaviorSource mBehaviorSource;
 
-		// Token: 0x0400000A RID: 10
+		/// <summary>
+        /// 是否暂停
+        /// </summary>
 		private bool isPaused;
 
-		// Token: 0x0400000B RID: 11
+		/// <summary>
+        /// 执行状态
+        /// </summary>
 		private TaskStatus executionStatus;
 
-		// Token: 0x0400000C RID: 12
+		/// <summary>
+        /// 标记是否初始化，重新设置行为树资源时设置为false，启动完成后设置为true
+        /// </summary>
 		private bool initialized;
 
-		// Token: 0x0400000D RID: 13
+		/// <summary>
+        /// 每个节点的字段的默认值缓存
+        /// </summary>
 		private List<Dictionary<string, object>> defaultValues;
 
-		// Token: 0x0400000E RID: 14
+		/// <summary>
+        /// 共享变量的默认值缓存
+        /// </summary>
 		private Dictionary<string, object> defaultVariableValues;
 
-		// Token: 0x0400000F RID: 15
+		/// <summary>
+        /// 标记包含事件类型
+        /// </summary>
 		private bool[] hasEvent = new bool[11];
 
-		// Token: 0x04000010 RID: 16
-		private Dictionary<string, List<TaskCoroutine>> activeTaskCoroutines;
+        /// <summary>
+        /// TaskCoroutine 的缓存容器
+        /// </summary>
+        private Dictionary<string, List<TaskCoroutine>> activeTaskCoroutines;
 
-		// Token: 0x04000011 RID: 17
+		/// <summary>
+        /// 注册的事件集合
+        /// </summary>
 		private Dictionary<Type, Dictionary<string, Delegate>> eventTable;
 
-		// Token: 0x04000012 RID: 18
-		[NonSerialized]
+        /// <summary>
+        /// GizmoView 绘制模式
+        /// </summary>
+        [NonSerialized]
 		public Behavior.GizmoViewMode gizmoViewMode;
 
 		// Token: 0x04000013 RID: 19
 		[NonSerialized]
 		public bool showBehaviorDesignerGizmo = true;
 
-		// Token: 0x02000003 RID: 3
+		/// <summary>
+        /// 事件类型枚举，与事件名相同
+        /// </summary>
 		public enum EventTypes
 		{
-			// Token: 0x04000018 RID: 24
 			OnCollisionEnter,
-			// Token: 0x04000019 RID: 25
 			OnCollisionExit,
-			// Token: 0x0400001A RID: 26
 			OnTriggerEnter,
-			// Token: 0x0400001B RID: 27
 			OnTriggerExit,
-			// Token: 0x0400001C RID: 28
 			OnCollisionEnter2D,
-			// Token: 0x0400001D RID: 29
 			OnCollisionExit2D,
-			// Token: 0x0400001E RID: 30
 			OnTriggerEnter2D,
-			// Token: 0x0400001F RID: 31
 			OnTriggerExit2D,
-			// Token: 0x04000020 RID: 32
 			OnControllerColliderHit,
-			// Token: 0x04000021 RID: 33
 			OnLateUpdate,
-			// Token: 0x04000022 RID: 34
 			OnFixedUpdate,
-			// Token: 0x04000023 RID: 35
 			None
 		}
-
-		// Token: 0x02000004 RID: 4
+        /// <summary>
+        /// GizmoView 绘制模式
+        /// </summary>
 		public enum GizmoViewMode
 		{
-			// Token: 0x04000025 RID: 37
 			Running,
-			// Token: 0x04000026 RID: 38
 			Always,
-			// Token: 0x04000027 RID: 39
 			Selected,
-			// Token: 0x04000028 RID: 40
 			Never
 		}
 
-		// Token: 0x0200004D RID: 77
-		// (Invoke) Token: 0x06000261 RID: 609
+		/// <summary>
+        /// 行为树的事件委托类型
+        /// </summary>
 		public delegate void BehaviorHandler();
 	}
 }

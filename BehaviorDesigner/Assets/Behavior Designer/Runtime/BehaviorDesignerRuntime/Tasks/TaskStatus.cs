@@ -1,17 +1,27 @@
-﻿using System;
+using System;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-	// Token: 0x0200002A RID: 42
+	/// <summary>
+    /// 任务状态
+    /// </summary>
 	public enum TaskStatus
 	{
-		// Token: 0x040000C8 RID: 200
+		/// <summary>
+        /// 无效
+        /// </summary>
 		Inactive,
-		// Token: 0x040000C9 RID: 201
+		/// <summary>
+        /// 失败
+        /// </summary>
 		Failure,
-		// Token: 0x040000CA RID: 202
+		/// <summary>
+        /// 成功
+        /// </summary>
 		Success,
-		// Token: 0x040000CB RID: 203
+		/// <summary>
+        /// 运行
+        /// </summary>
 		Running
 	}
 }

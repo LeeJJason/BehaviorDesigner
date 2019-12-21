@@ -11,9 +11,9 @@ namespace BehaviorDesigner.Runtime
 	[AddComponentMenu("Behavior Designer/Behavior Manager")]
 	public class BehaviorManager : MonoBehaviour
 	{
-		// Token: 0x1700000D RID: 13
-		// (get) Token: 0x0600006C RID: 108 RVA: 0x000037C0 File Offset: 0x000019C0
-		// (set) Token: 0x0600006D RID: 109 RVA: 0x000037C8 File Offset: 0x000019C8
+		/// <summary>
+        /// 设置更新方式
+        /// </summary>
 		public UpdateIntervalType UpdateInterval
 		{
 			get
@@ -27,10 +27,10 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x1700000E RID: 14
-		// (get) Token: 0x0600006E RID: 110 RVA: 0x000037D8 File Offset: 0x000019D8
-		// (set) Token: 0x0600006F RID: 111 RVA: 0x000037E0 File Offset: 0x000019E0
-		public float UpdateIntervalSeconds
+        /// <summary>
+        /// UpdateInterval 为 SpecifySeconds 时，设置更新时间间隔
+        /// </summary>
+        public float UpdateIntervalSeconds
 		{
 			get
 			{
@@ -256,7 +256,10 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x06000085 RID: 133 RVA: 0x00003AA0 File Offset: 0x00001CA0
+		/// <summary>
+        /// 启动行为树组件
+        /// </summary>
+        /// <param name="behavior"></param>
 		public void EnableBehavior(Behavior behavior)
 		{
 			if (this.IsBehaviorEnabled(behavior))
@@ -264,6 +267,7 @@ namespace BehaviorDesigner.Runtime
 				return;
 			}
 			BehaviorManager.BehaviorTree behaviorTree;
+            //判断行为树是否只是暂停
 			if (this.pausedBehaviorTrees.TryGetValue(behavior, out behaviorTree))
 			{
 				this.behaviorTrees.Add(behaviorTree);
@@ -731,13 +735,20 @@ namespace BehaviorDesigner.Runtime
 			return null;
 		}
 
-		// Token: 0x06000089 RID: 137 RVA: 0x00004BA4 File Offset: 0x00002DA4
-		public void DisableBehavior(Behavior behavior)
+        /// <summary>
+        /// 销毁行为树 behavior
+        /// </summary>
+        /// <param name="behavior"></param>
+        public void DisableBehavior(Behavior behavior)
 		{
 			this.DisableBehavior(behavior, false);
 		}
 
-		// Token: 0x0600008A RID: 138 RVA: 0x00004BB0 File Offset: 0x00002DB0
+		/// <summary>
+        /// 禁用行为树是否暂停
+        /// </summary>
+        /// <param name="behavior"></param>
+        /// <param name="paused"></param>
 		public void DisableBehavior(Behavior behavior, bool paused)
 		{
 			if (!this.IsBehaviorEnabled(behavior))
@@ -776,7 +787,10 @@ namespace BehaviorDesigner.Runtime
 			}
 		}
 
-		// Token: 0x0600008B RID: 139 RVA: 0x00004CB4 File Offset: 0x00002EB4
+		/// <summary>
+        /// 销毁行为树
+        /// </summary>
+        /// <param name="behavior"></param>
 		public void DestroyBehavior(Behavior behavior)
 		{
 			BehaviorManager.BehaviorTree behaviorTree;
@@ -842,7 +856,11 @@ namespace BehaviorDesigner.Runtime
 			this.Restart(behaviorTree);
 		}
 
-		// Token: 0x0600008D RID: 141 RVA: 0x00004EB0 File Offset: 0x000030B0
+		/// <summary>
+        /// 判断行为树是否启用
+        /// </summary>
+        /// <param name="behavior"></param>
+        /// <returns></returns>
 		public bool IsBehaviorEnabled(Behavior behavior)
 		{
 			return this.behaviorTreeMap != null && this.behaviorTreeMap.Count > 0 && behavior != null && behavior.ExecutionStatus == TaskStatus.Running;
@@ -2069,14 +2087,20 @@ namespace BehaviorDesigner.Runtime
 		// Token: 0x04000036 RID: 54
 		public BehaviorManager.BehaviorManagerHandler onTaskBreakpoint;
 
-		// Token: 0x04000037 RID: 55
-		private List<BehaviorManager.BehaviorTree> behaviorTrees = new List<BehaviorManager.BehaviorTree>();
+        /// <summary>
+        /// 当前运行的 BehaviorManager.BehaviorTree
+        /// </summary>
+        private List<BehaviorManager.BehaviorTree> behaviorTrees = new List<BehaviorManager.BehaviorTree>();
 
-		// Token: 0x04000038 RID: 56
-		private Dictionary<Behavior, BehaviorManager.BehaviorTree> pausedBehaviorTrees = new Dictionary<Behavior, BehaviorManager.BehaviorTree>();
+        /// <summary>
+        /// 暂停的 Behavior 与 BehaviorManager.BehaviorTree 映射map
+        /// </summary>
+        private Dictionary<Behavior, BehaviorManager.BehaviorTree> pausedBehaviorTrees = new Dictionary<Behavior, BehaviorManager.BehaviorTree>();
 
-		// Token: 0x04000039 RID: 57
-		private Dictionary<Behavior, BehaviorManager.BehaviorTree> behaviorTreeMap = new Dictionary<Behavior, BehaviorManager.BehaviorTree>();
+        /// <summary>
+        /// Behavior 与 BehaviorManager.BehaviorTree 映射map
+        /// </summary>
+        private Dictionary<Behavior, BehaviorManager.BehaviorTree> behaviorTreeMap = new Dictionary<Behavior, BehaviorManager.BehaviorTree>();
 
 		// Token: 0x0400003A RID: 58
 		private List<int> conditionalParentIndexes = new List<int>();
@@ -2123,7 +2147,9 @@ namespace BehaviorDesigner.Runtime
 			Count
 		}
 
-		// Token: 0x0200000A RID: 10
+		/// <summary>
+        /// 行为树解析后的代码对象
+        /// </summary>
 		public class BehaviorTree
 		{
 			// Token: 0x060000B5 RID: 181 RVA: 0x00007684 File Offset: 0x00005884
